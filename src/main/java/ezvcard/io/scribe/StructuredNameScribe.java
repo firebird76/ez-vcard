@@ -18,7 +18,7 @@ import ezvcard.parameter.VCardParameters;
 import ezvcard.property.StructuredName;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -151,7 +151,7 @@ public class StructuredNameScribe extends VCardPropertyScribe<StructuredName> {
 	}
 
 	private static String s(String value) {
-		return (value == null || value.length() == 0) ? null : value;
+		return (value == null || value.isEmpty()) ? null : value;
 	}
 
 	@Override

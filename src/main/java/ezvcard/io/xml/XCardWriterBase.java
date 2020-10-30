@@ -9,7 +9,7 @@ import ezvcard.io.StreamWriter;
 import ezvcard.parameter.VCardParameters;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -71,6 +71,16 @@ abstract class XCardWriterBase extends StreamWriter {
 	@Override
 	protected VCardVersion getTargetVersion() {
 		return targetVersion;
+	}
+
+	/**
+	 * Removes parameters that are not supported by xCard.
+	 * @param parameters the property parameters
+	 */
+	protected void removeUnsupportedParameters(VCardParameters parameters) {
+		parameters.setCharset(null);
+		parameters.setEncoding(null);
+		parameters.setValue(null);
 	}
 
 	/**

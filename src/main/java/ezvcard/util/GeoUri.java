@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import ezvcard.Messages;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -376,7 +376,7 @@ public final class GeoUri {
 			} else {
 				if (sb == null) {
 					sb = new StringBuilder(value.length() * 2);
-					sb.append(value.substring(0, i));
+					sb.append(value, 0, i);
 				}
 				String hex = Integer.toString(c, 16);
 				sb.append('%').append(hex);

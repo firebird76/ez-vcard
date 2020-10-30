@@ -52,7 +52,7 @@ import ezvcard.util.ClearableStringBuilder;
 import ezvcard.util.XmlUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -476,7 +476,7 @@ public class XCardReader extends StreamReader {
 
 	private enum ElementType {
 		//enum values are lower-case so they won't get confused with the "XCardQNames" variable names
-		vcards, vcard, group, property, parameters, parameter, parameterValue;
+		vcards, vcard, group, property, parameters, parameter, parameterValue
 	}
 
 	/**

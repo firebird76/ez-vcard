@@ -14,7 +14,7 @@ import ezvcard.parameter.VCardParameters;
 import ezvcard.property.Revision;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -115,12 +115,12 @@ public class RevisionScribe extends VCardPropertyScribe<Revision> {
 	}
 
 	private Revision parse(String value) {
-		if (value == null || value.length() == 0) {
+		if (value == null || value.isEmpty()) {
 			return new Revision((Date) null);
 		}
 
 		try {
-			return new Revision(date(value));
+			return new Revision(calendar(value));
 		} catch (IllegalArgumentException e) {
 			throw new CannotParseException(5);
 		}

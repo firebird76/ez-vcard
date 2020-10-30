@@ -8,7 +8,7 @@ import ezvcard.property.Sound;
 import ezvcard.util.DataUri;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -84,12 +84,12 @@ public class SoundScribe extends BinaryPropertyScribe<Sound, SoundType> {
 		}
 
 		String src = element.absUrl("src");
-		if (src.length() == 0) {
+		if (src.isEmpty()) {
 			throw new CannotParseException(17);
 		}
 
 		String type = element.attr("type");
-		SoundType mediaType = (type.length() == 0) ? null : _mediaTypeFromMediaTypeParameter(type);
+		SoundType mediaType = type.isEmpty() ? null : _mediaTypeFromMediaTypeParameter(type);
 
 		try {
 			DataUri uri = DataUri.parse(src);

@@ -23,7 +23,7 @@ import ezvcard.property.Xml;
 import ezvcard.util.XmlUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -118,7 +118,7 @@ public class XmlScribe extends VCardPropertyScribe<Xml> {
 	protected Xml _parseJson(JCardValue value, VCardDataType dataType, VCardParameters parameters, ParseContext context) {
 		try {
 			String xml = value.asSingle();
-			return (xml.length() == 0) ? new Xml((Document) null) : new Xml(xml);
+			return xml.isEmpty() ? new Xml((Document) null) : new Xml(xml);
 		} catch (SAXException e) {
 			throw new CannotParseException(22);
 		}

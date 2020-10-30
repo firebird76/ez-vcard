@@ -19,7 +19,7 @@ import ezvcard.util.DataUri;
 import ezvcard.util.org.apache.commons.codec.binary.Base64;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -70,8 +70,7 @@ public class KeyScribeTest {
 
 	@Test
 	public void dataType() {
-		sensei.assertDataType(withUrl).versions(V2_1).run(URL);
-		sensei.assertDataType(withUrl).versions(V3_0, V4_0).run(URI);
+		sensei.assertDataType(withUrl).run(URI);
 
 		sensei.assertDataType(withData).versions(V2_1, V3_0).run(null);
 		sensei.assertDataType(withData).versions(V4_0).run(URI);

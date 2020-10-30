@@ -19,7 +19,7 @@ import ezvcard.io.xml.XCardElement;
 import ezvcard.parameter.VCardParameters;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -157,7 +157,7 @@ public class FavoriteColors extends VCardProperty {
 			FavoriteColors property = new FavoriteColors();
 
 			String lang = element.attr("lang");
-			property.setLanguage((lang.length() == 0) ? null : lang);
+			property.setLanguage((lang.isEmpty()) ? null : lang);
 
 			property.getColors().addAll(element.allValues("color")); //gets the hCard values of all descendant elements that have a CSS class named "color"
 

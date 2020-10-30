@@ -24,7 +24,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -177,7 +177,7 @@ public class HCardPage {
 	 * @param name the file name, relative to this class
 	 * @param mediaType the media type of the image
 	 * @return the image
-	 * @throws IOException
+	 * @throws IOException if there's a problem reading the image
 	 */
 	private Photo readImage(String name, ImageType mediaType) throws IOException {
 		return new Photo(getClass().getResourceAsStream(name), mediaType);

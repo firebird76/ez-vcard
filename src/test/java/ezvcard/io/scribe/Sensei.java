@@ -30,7 +30,7 @@ import ezvcard.util.HtmlUtils;
 import ezvcard.util.XmlUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -484,7 +484,7 @@ public class Sensei<T extends VCardProperty> {
 		 * Runs the test.
 		 * @param check object for asserting the parsed property object or null
 		 * not to assert the property object
-		 * @param expectedCode if the parse operation is expected to throw a
+		 * @param cannotParseExceptionCode if the parse operation is expected to throw a
 		 * {@link CannotParseException}, this parameter is the expected warning
 		 * code of the exception. This should be null if the exception is not
 		 * expected to have a warning code. This should be -1 if a
@@ -726,7 +726,7 @@ public class Sensei<T extends VCardProperty> {
 	 * Used for validating the contents of a parsed property object.
 	 * @param <T> the property class
 	 */
-	public static interface Check<T extends VCardProperty> {
+	public interface Check<T extends VCardProperty> {
 		/**
 		 * Validates the contents of the parsed property object.
 		 * @param property the parsed property object

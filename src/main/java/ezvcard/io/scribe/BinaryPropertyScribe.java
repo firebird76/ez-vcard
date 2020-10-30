@@ -19,7 +19,7 @@ import ezvcard.util.DataUri;
 import ezvcard.util.org.apache.commons.codec.binary.Base64;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -174,7 +174,7 @@ public abstract class BinaryPropertyScribe<T extends BinaryProperty<U>, U extend
 		}
 
 		String data = element.absUrl("data");
-		if (data.length() == 0) {
+		if (data.isEmpty()) {
 			throw new CannotParseException(2);
 		}
 
@@ -185,7 +185,7 @@ public abstract class BinaryPropertyScribe<T extends BinaryProperty<U>, U extend
 			return _newInstance(uri.getData(), mediaType);
 		} catch (IllegalArgumentException e) {
 			//not a data URI
-			U mediaType = null;
+			U mediaType;
 			String type = element.attr("type");
 			if (type.length() > 0) {
 				mediaType = _mediaTypeFromMediaTypeParameter(type);

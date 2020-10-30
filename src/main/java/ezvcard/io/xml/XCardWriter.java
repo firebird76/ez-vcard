@@ -46,7 +46,7 @@ import ezvcard.util.Utf8Writer;
 import ezvcard.util.XmlUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -359,6 +359,8 @@ public class XCardWriter extends XCardWriterBase {
 		VCardPropertyScribe scribe = index.getPropertyScribe(property);
 		VCardParameters parameters = scribe.prepareParameters(property, targetVersion, vcard);
 
+		removeUnsupportedParameters(parameters);
+
 		//get the property element to write
 		Element propertyElement;
 		if (property instanceof Xml) {
@@ -442,10 +444,10 @@ public class XCardWriter extends XCardWriterBase {
 	}
 
 	/**
-	 * Makes an childless element appear as {@code<foo />} instead of
-	 * {@code<foo></foo>}
+	 * Makes an childless element appear as {@code <foo />} instead of
+	 * {@code <foo></foo>}
 	 * @param element the element
-	 * @throws SAXException
+	 * @throws SAXException if there is a problem creating the element
 	 */
 	private void childless(Element element) throws SAXException {
 		Attributes attributes = getElementAttributes(element);

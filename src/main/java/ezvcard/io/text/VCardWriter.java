@@ -24,6 +24,7 @@ import ezvcard.io.EmbeddedVCardException;
 import ezvcard.io.SkipMeException;
 import ezvcard.io.StreamWriter;
 import ezvcard.io.scribe.VCardPropertyScribe;
+import ezvcard.parameter.Encoding;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.Address;
 import ezvcard.property.BinaryProperty;
@@ -33,7 +34,7 @@ import ezvcard.util.IOUtils;
 import ezvcard.util.Utf8Writer;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -328,6 +329,7 @@ public class VCardWriter extends StreamWriter implements Flushable {
 
 			handleValueParameter(property, scribe, parameters);
 			handleLabelParameter(property, parameters);
+			handleQuotedPrintableEncodingParameter(property, parameters);
 
 			writer.writeProperty(property.getGroup(), scribe.getPropertyName(), new VObjectParameters(parameters.getMap()), value);
 
@@ -380,7 +382,7 @@ public class VCardWriter extends StreamWriter implements Flushable {
 	 * <li>The data type is NOT "unknown"</li>
 	 * <li>The data type is different from the property's default data type</li>
 	 * <li>The data type does not fall under the "date/time special case" (see
-	 * {@link #isDateTimeValueParameterSpecialCase()})</li>
+	 * {@link #isDateTimeValueParameterSpecialCase})</li>
 	 * </ol>
 	 * @param property the property
 	 * @param scribe the property scribe
@@ -429,6 +431,23 @@ public class VCardWriter extends StreamWriter implements Flushable {
 
 		label = escapeNewlines(label);
 		parameters.setLabel(label);
+	}
+
+	/**
+	 * Disables quoted-printable encoding on the given property if the target
+	 * vCard version does not support this encoding scheme.
+	 * @param property the property
+	 * @param parameters the property parameters
+	 */
+	private void handleQuotedPrintableEncodingParameter(VCardProperty property, VCardParameters parameters) {
+		if (targetVersion == VCardVersion.V2_1) {
+			return;
+		}
+
+		if (parameters.getEncoding() == Encoding.QUOTED_PRINTABLE) {
+			parameters.setEncoding(null);
+			parameters.setCharset(null);
+		}
 	}
 
 	/**

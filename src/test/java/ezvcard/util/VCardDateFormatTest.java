@@ -6,16 +6,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.ClassRule;
 import org.junit.Test;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -71,6 +74,33 @@ public class VCardDateFormatTest {
 	}
 
 	@Test
+	public void format_different_locales() {
+		Date date = date("2020-10-28 12:00:00");
+
+		Locale defaultLocale = Locale.getDefault();
+		try {
+			for (Locale locale : Locale.getAvailableLocales()) {
+				Locale.setDefault(locale);
+				assertLocale(locale, VCardDateFormat.DATE_BASIC, date, "20201028");
+				assertLocale(locale, VCardDateFormat.DATE_EXTENDED, date, "2020-10-28");
+				assertLocale(locale, VCardDateFormat.DATE_TIME_BASIC, date, "20201028T120000+0100");
+				assertLocale(locale, VCardDateFormat.DATE_TIME_EXTENDED, date, "2020-10-28T12:00:00+01:00");
+				assertLocale(locale, VCardDateFormat.UTC_DATE_TIME_BASIC, date, "20201028T110000Z");
+				assertLocale(locale, VCardDateFormat.UTC_DATE_TIME_EXTENDED, date, "2020-10-28T11:00:00Z");
+				assertLocale(locale, VCardDateFormat.HCARD_DATE_TIME, date, "2020-10-28T12:00:00+0100");
+			}
+		} finally {
+			Locale.setDefault(defaultLocale);
+		}
+	}
+
+	private static void assertLocale(Locale locale, VCardDateFormat df, Date date, String expected) {
+		String actual = df.format(date);
+		String message = "Test failed for " + df.name() + " with locale \"" + locale + "\".";
+		assertEquals(message, expected, actual);
+	}
+
+	@Test
 	public void parse() throws Exception {
 		Date date = date("2012-07-01");
 		Date datetime = date("2012-07-01 08:01:30");
@@ -108,6 +138,124 @@ public class VCardDateFormatTest {
 		assertEquals(c.getTime(), VCardDateFormat.parse("20120701T070130.1Z"));
 		c.set(Calendar.MILLISECOND, 124);
 		assertEquals(c.getTime(), VCardDateFormat.parse("20120701T070130.1239Z")); //round
+	}
+
+	@Test
+	public void parseAsCalendar_date() throws Exception {
+		Calendar actual = VCardDateFormat.parseAsCalendar("20120701");
+
+		/*
+		 * "isSet()" should be called before any calls to "get()" are made
+		 * because some unset fields get computed when other fields are
+		 * retrieved using "get()". See the Javadoc for "isSet()".
+		 */
+		assertFalse(actual.isSet(Calendar.HOUR_OF_DAY));
+		assertFalse(actual.isSet(Calendar.MINUTE));
+		assertFalse(actual.isSet(Calendar.SECOND));
+		assertFalse(actual.isSet(Calendar.ZONE_OFFSET));
+
+		assertEquals(TimeZone.getDefault().getID(), actual.getTimeZone().getID());
+		assertEquals(2012, actual.get(Calendar.YEAR));
+		assertEquals(6, actual.get(Calendar.MONTH));
+		assertEquals(1, actual.get(Calendar.DAY_OF_MONTH));
+
+		assertEquals(date("2012-07-01"), actual.getTime());
+	}
+
+	@Test
+	public void parseAsCalendar_with_offset() throws Exception {
+		Calendar actual = VCardDateFormat.parseAsCalendar("20120701T100130+0300");
+
+		assertEquals(TimeUnit.HOURS.toMillis(3), actual.get(Calendar.ZONE_OFFSET));
+		assertEquals("GMT+03:00", actual.getTimeZone().getID());
+		assertEquals(2012, actual.get(Calendar.YEAR));
+		assertEquals(6, actual.get(Calendar.MONTH));
+		assertEquals(1, actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(10, actual.get(Calendar.HOUR_OF_DAY));
+		assertEquals(1, actual.get(Calendar.MINUTE));
+		assertEquals(30, actual.get(Calendar.SECOND));
+
+		assertEquals(date("2012-07-01 08:01:30"), actual.getTime());
+	}
+
+	@Test
+	public void parseAsCalendar_with_z() throws Exception {
+		Calendar actual = VCardDateFormat.parseAsCalendar("20120701T100130Z");
+
+		/*
+		 * "isSet()" should be called before any calls to "get()" are made
+		 * because some unset fields get computed when other fields are
+		 * retrieved using "get()". See the Javadoc for "isSet()".
+		 */
+		assertFalse(actual.isSet(Calendar.ZONE_OFFSET));
+
+		assertEquals("GMT", actual.getTimeZone().getID());
+		assertEquals(2012, actual.get(Calendar.YEAR));
+		assertEquals(6, actual.get(Calendar.MONTH));
+		assertEquals(1, actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(10, actual.get(Calendar.HOUR_OF_DAY));
+		assertEquals(1, actual.get(Calendar.MINUTE));
+		assertEquals(30, actual.get(Calendar.SECOND));
+		assertEquals(0, actual.get(Calendar.ZONE_OFFSET));
+
+		assertEquals(date("2012-07-01 11:01:30"), actual.getTime());
+	}
+
+	@Test
+	public void parseAsCalendar_without_offset() throws Exception {
+		Calendar actual = VCardDateFormat.parseAsCalendar("20120701T100130");
+
+		/*
+		 * "isSet()" should be called before any calls to "get()" are made
+		 * because some unset fields get computed when other fields are
+		 * retrieved using "get()". See the Javadoc for "isSet()".
+		 */
+		assertFalse(actual.isSet(Calendar.ZONE_OFFSET));
+
+		assertEquals(TimeZone.getDefault().getID(), actual.getTimeZone().getID());
+		assertEquals(2012, actual.get(Calendar.YEAR));
+		assertEquals(6, actual.get(Calendar.MONTH));
+		assertEquals(1, actual.get(Calendar.DAY_OF_MONTH));
+		assertEquals(10, actual.get(Calendar.HOUR_OF_DAY));
+		assertEquals(1, actual.get(Calendar.MINUTE));
+		assertEquals(30, actual.get(Calendar.SECOND));
+		assertEquals(TimeZone.getDefault().getRawOffset(), actual.get(Calendar.ZONE_OFFSET));
+
+		assertEquals(date("2012-07-01 10:01:30"), actual.getTime());
+	}
+
+	/**
+	 * Allow single digit month and/or date as long as there are dashes.
+	 */
+	@Test
+	public void parse_single_digit_month_and_date() throws Exception {
+		{
+			Date date = date("2012-07-01");
+
+			assertEquals(date, VCardDateFormat.parse("2012-07-1"));
+			assertEquals(date, VCardDateFormat.parse("2012-7-01"));
+			assertEquals(date, VCardDateFormat.parse("2012-7-1"));
+
+			try {
+				VCardDateFormat.parse("201271");
+				fail();
+			} catch (IllegalArgumentException e) {
+				//expected
+			}
+		}
+
+		{
+			Date ambiguous = date("2012-11-03");
+
+			assertEquals(ambiguous, VCardDateFormat.parse("2012-11-3"));
+
+			try {
+				VCardDateFormat.parse("2012113"); //Jan 13 or Nov 3?
+				fail();
+			} catch (IllegalArgumentException e) {
+				//expected
+			}
+		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)

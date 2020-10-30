@@ -17,7 +17,7 @@ import ezvcard.property.Timezone;
 import ezvcard.util.UtcOffset;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -253,7 +253,7 @@ public class TimezoneScribe extends VCardPropertyScribe<Timezone> {
 	}
 
 	private Timezone parse(String value, VCardDataType dataType, ParseContext context) {
-		if (value == null || value.length() == 0) {
+		if (value == null || value.isEmpty()) {
 			return new Timezone((String) null);
 		}
 

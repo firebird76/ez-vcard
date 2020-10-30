@@ -1,6 +1,7 @@
 package ezvcard.io.scribe;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import ezvcard.property.VCardProperty;
 import ezvcard.util.VCardDateFormat;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -439,7 +440,7 @@ public abstract class VCardPropertyScribe<T extends VCardProperty> {
 	 * <p>
 	 * This method should be overridden by child classes that wish to support
 	 * hCard. The default implementation of this method will retrieve the HTML
-	 * element's hCard value (as described in {@link HCardElement#value}), and
+	 * element's hCard value (as described in {@link HCardElement#value()}), and
 	 * pass it into the {@link #_parseText} method.
 	 * </p>
 	 * @param element the property's HTML element
@@ -565,12 +566,31 @@ public abstract class VCardPropertyScribe<T extends VCardProperty> {
 	}
 
 	/**
+	 * Parses a date string.
+	 * @param value the date string
+	 * @return the parsed date
+	 * @throws IllegalArgumentException if the date cannot be parsed
+	 */
+	protected static Calendar calendar(String value) {
+		return VCardDateFormat.parseAsCalendar(value);
+	}
+
+	/**
 	 * Formats a {@link Date} object as a string.
 	 * @param date the date
 	 * @return a helper object for customizing the write operation
 	 */
 	protected static DateWriter date(Date date) {
 		return new DateWriter(date);
+	}
+	
+	/**
+	 * Formats a {@link Calendar} object as a string.
+	 * @param calendar the date
+	 * @return a helper object for customizing the write operation
+	 */
+	protected static DateWriter date(Calendar calendar) {
+		return date(calendar.getTime());
 	}
 
 	/**

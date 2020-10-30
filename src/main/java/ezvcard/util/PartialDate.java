@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import ezvcard.Messages;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -148,7 +148,7 @@ public final class PartialDate {
 		if (afterT == null) {
 			//date or time
 			success = parseDate(beforeT, builder) || parseTime(beforeT, builder);
-		} else if (beforeT.length() == 0) {
+		} else if (beforeT.isEmpty()) {
 			//time
 			success = parseTime(afterT, builder);
 		} else {
@@ -420,8 +420,8 @@ public final class PartialDate {
 
 		/**
 		 * Tries to parse a given string.
-		 * @param components the date/time components array
-		 * @param value the string
+		 * @param builder the object to assign the parsed data to
+		 * @param value the string to parse
 		 * @return true if the string was successfully parsed, false if not
 		 */
 		public boolean parse(Builder builder, String value) {

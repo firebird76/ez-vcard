@@ -21,7 +21,7 @@ import ezvcard.VCardVersion;
 import ezvcard.parameter.KeyType;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -67,9 +67,15 @@ public class KeyTest {
 		assertArrayEquals("data".getBytes(), property.getData());
 		assertNull(property.getText());
 
-		property = new Key("one", KeyType.GPG);
+		property = new Key("http://example.com/key.gpg", KeyType.GPG);
 		assertEquals(KeyType.GPG, property.getContentType());
-		assertEquals("one", property.getUrl());
+		assertEquals("http://example.com/key.gpg", property.getUrl());
+		assertNull(property.getData());
+		assertNull(property.getText());
+		
+		property = new Key("OPENPGP4FPR:ABAF11C65A2970B130ABE3C479BE3E4300411886", null);
+		assertNull(property.getContentType());
+		assertEquals("OPENPGP4FPR:ABAF11C65A2970B130ABE3C479BE3E4300411886", property.getUrl());
 		assertNull(property.getData());
 		assertNull(property.getText());
 

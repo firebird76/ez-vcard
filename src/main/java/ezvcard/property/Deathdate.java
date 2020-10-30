@@ -1,5 +1,6 @@
 package ezvcard.property;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import ezvcard.SupportedVersions;
@@ -7,7 +8,7 @@ import ezvcard.VCardVersion;
 import ezvcard.util.PartialDate;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -117,6 +118,24 @@ public class Deathdate extends DateOrTimeProperty {
 	 * strictly a date
 	 */
 	public Deathdate(Date date, boolean hasTime) {
+		super(date, hasTime);
+	}
+	
+	/**
+	 * Creates a deathdate property.
+	 * @param date the deathdate
+	 */
+	public Deathdate(Calendar date) {
+		super(date);
+	}
+
+	/**
+	 * Creates a deathdate property.
+	 * @param date the deathdate
+	 * @param hasTime true to include the date's time component, false if it's
+	 * strictly a date
+	 */
+	public Deathdate(Calendar date, boolean hasTime) {
 		super(date, hasTime);
 	}
 

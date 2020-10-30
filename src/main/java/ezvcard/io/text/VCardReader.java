@@ -40,7 +40,7 @@ import ezvcard.util.IOUtils;
 import ezvcard.util.StringUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -371,7 +371,7 @@ public class VCardReader extends StreamReader {
 			 * If the property does not have a value, a nested vCard is expected
 			 * to be next (2.1 style).
 			 */
-			if (value.trim().length() == 0) {
+			if (value.trim().isEmpty()) {
 				embeddedVCardException = exception;
 				return;
 			}

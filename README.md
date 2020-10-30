@@ -48,10 +48,22 @@ String str = Ezvcard.write(vcard).version(VCardVersion.V4_0).go();
  * Full compliance with 2.1, 3.0, and 4.0 specifications (see [Supported Specifications](https://github.com/mangstadt/ez-vcard/wiki/Supported-Specifications)).
  * Supports XML, HTML, and JSON encoded vCards (see [Supported Specifications](https://github.com/mangstadt/ez-vcard/wiki/Supported-Specifications)).
  * Extensive unit test coverage.
- * Low Java version requirement (1.5 or above).
+ * Low Java version requirement (1.6 or above).
  * Few dependencies on external libraries.  Dependencies can be selectively excluded based on the functionality that is needed (see [Dependencies](https://github.com/mangstadt/ez-vcard/wiki/Dependencies)).
 
 # News
+
+**October 24, 2020**
+
+[Version 0.11.1](https://github.com/mangstadt/ez-vcard/wiki/Downloads) released.  This release fixes a vCard compatibility issue and updates ez-vcard's dependencies.  Please see the [changelog](https://github.com/mangstadt/ez-vcard/wiki/Changelog) for details.
+
+**July 24, 2020**
+
+[Version 0.11.0](https://github.com/mangstadt/ez-vcard/wiki/Downloads) released.  This release adds some small improvements and updates ez-vcard's dependencies.  Please see the [changelog](https://github.com/mangstadt/ez-vcard/wiki/Changelog) for details.
+
+**March 16, 2020**
+
+[Version 0.10.6](https://github.com/mangstadt/ez-vcard/wiki/Downloads) released.  This release adds a couple small improvements and updates ez-vcard's dependencies.  Please see the [changelog](https://github.com/mangstadt/ez-vcard/wiki/Changelog) for details.
 
 **December 23, 2018**
 
@@ -83,19 +95,19 @@ String str = Ezvcard.write(vcard).version(VCardVersion.V4_0).go();
 <dependency>
    <groupId>com.googlecode.ez-vcard</groupId>
    <artifactId>ez-vcard</artifactId>
-   <version>0.10.5</version>
+   <version>0.11.1</version>
 </dependency>
 ```
 
 **Gradle**
 
 ```
-compile 'com.googlecode.ez-vcard:ez-vcard:0.10.5'
+compile 'com.googlecode.ez-vcard:ez-vcard:0.11.1'
 ```
 
 # Build Instructions
 
-ez-vcard uses [Maven](http://maven.apache.org/) as its build tool, and adheres to its convensions.
+ez-vcard uses [Maven](http://maven.apache.org/) as its build tool, and adheres to its conventions.
 
 To build the project: `mvn compile`  
 To run the unit tests: `mvn test`  
@@ -117,6 +129,10 @@ Please submit bug reports and feature requests to the [issue tracker](https://gi
 # Android
 
 The [ez-vcard-android project](https://github.com/mangstadt/ez-vcard-android) interfaces between ez-vcard and the native Android APIs.  Note, however, that it is not being actively maintained.
+
+# Node.js
+
+A Node.js wrapper for ez-vcard can be found here: https://github.com/Maxim-Mazurok/ez-vcard
 
 # Credits
 

@@ -3,7 +3,7 @@ package ezvcard.util;
 import ezvcard.VCardVersion;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@ public class XCardBuilder {
 	private int count = 0;
 
 	public XCardBuilder() {
-		sb.append("<vcards xmlns=\"" + VCardVersion.V4_0.getXmlNamespace() + "\">");
+		sb.append("<vcards xmlns=\"").append(VCardVersion.V4_0.getXmlNamespace()).append("\">");
 		begin();
 	}
 

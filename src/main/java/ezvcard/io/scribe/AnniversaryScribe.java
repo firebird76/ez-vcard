@@ -1,12 +1,12 @@
 package ezvcard.io.scribe;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import ezvcard.property.Anniversary;
 import ezvcard.util.PartialDate;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ public class AnniversaryScribe extends DateOrTimePropertyScribe<Anniversary> {
 	}
 
 	@Override
-	protected Anniversary newInstance(Date date, boolean hasTime) {
+	protected Anniversary newInstance(Calendar date, boolean hasTime) {
 		return new Anniversary(date, hasTime);
 	}
 

@@ -6,7 +6,7 @@ import ezvcard.io.html.HCardElement;
 import ezvcard.property.TextProperty;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ public abstract class UriPropertyScribe<T extends TextProperty> extends StringPr
 	@Override
 	protected T _parseHtml(HCardElement element, ParseContext context) {
 		String href = element.absUrl("href");
-		if (href.length() == 0) {
+		if (href.isEmpty()) {
 			return super._parseHtml(element, context);
 		}
 		return _parseValue(href);

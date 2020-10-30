@@ -3,6 +3,7 @@ package ezvcard.io.xml;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -13,7 +14,7 @@ import ezvcard.VCardVersion;
 import ezvcard.util.XmlUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -162,7 +163,7 @@ public class XCardElement {
 	public List<Element> append(String name, Collection<String> values) {
 		if (values.isEmpty()) {
 			Element element = append(name, (String) null);
-			return Arrays.asList(element);
+			return Collections.singletonList(element);
 		}
 
 		List<Element> elements = new ArrayList<Element>(values.size());

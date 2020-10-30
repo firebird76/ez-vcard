@@ -16,7 +16,7 @@ import ezvcard.property.Label;
 import ezvcard.property.VCardProperty;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -60,7 +60,7 @@ public abstract class StreamReader implements Closeable {
 	 */
 	public List<VCard> readAll() throws IOException {
 		List<VCard> vcards = new ArrayList<VCard>();
-		VCard vcard = null;
+		VCard vcard;
 		while ((vcard = readNext()) != null) {
 			vcards.add(vcard);
 		}

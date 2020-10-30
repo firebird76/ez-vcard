@@ -18,7 +18,7 @@ import ezvcard.property.Agent;
 import ezvcard.property.VCardProperty;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -102,7 +102,7 @@ public class AgentScribe extends VCardPropertyScribe<Agent> {
 		}
 
 		String url = element.absUrl("href");
-		if (url.length() == 0) {
+		if (url.isEmpty()) {
 			url = element.value();
 		}
 		property.setUrl(url);

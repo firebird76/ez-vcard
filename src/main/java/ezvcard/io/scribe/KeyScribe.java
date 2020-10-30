@@ -15,7 +15,7 @@ import ezvcard.parameter.VCardParameters;
 import ezvcard.property.Key;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -55,6 +55,14 @@ public class KeyScribe extends BinaryPropertyScribe<Key, KeyType> {
 		 */
 		if (version == VCardVersion.V4_0 && property.getText() != null) {
 			return VCardDataType.TEXT;
+		}
+
+		/*
+		 * Always use the URI data type with URL/URIs for consistency (even
+		 * though 2.1 technically only supports the "URL" data type).
+		 */
+		if (property.getUrl() != null) {
+			return VCardDataType.URI;
 		}
 
 		return super._dataType(property, version);

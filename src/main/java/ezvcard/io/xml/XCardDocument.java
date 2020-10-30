@@ -54,7 +54,7 @@ import ezvcard.util.Utf8Writer;
 import ezvcard.util.XmlUtils;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -533,7 +533,7 @@ public class XCardDocument {
 			for (Element child : children) {
 				if (XmlUtils.hasQName(child, GROUP)) {
 					String group = child.getAttribute("name");
-					if (group.length() == 0) {
+					if (group.isEmpty()) {
 						group = null;
 					}
 					List<Element> grandChildren = XmlUtils.toElementList(child.getChildNodes());
@@ -553,8 +553,6 @@ public class XCardDocument {
 		 * @param element the element to parse
 		 * @param group the group name or null if the property does not belong
 		 * to a group
-		 * @param vcard the vCard object
-		 * @param warningsBuf the list to add the warnings to
 		 */
 		private void parseAndAddElement(Element element, String group) {
 			VCardParameters parameters = parseParameters(element);
@@ -725,6 +723,7 @@ public class XCardDocument {
 
 			//marshal the parameters
 			VCardParameters parameters = scribe.prepareParameters(property, targetVersion, vcard);
+			removeUnsupportedParameters(parameters);
 			if (!parameters.isEmpty()) {
 				Element parametersElement = marshalParameters(parameters);
 				Node firstChild = propertyElement.getFirstChild();

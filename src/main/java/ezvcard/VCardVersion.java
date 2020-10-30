@@ -2,7 +2,7 @@ package ezvcard;
 
 import com.github.mangstadt.vinnie.SyntaxStyle;
 
-/**
+/*
  * Copyright 2011 George El-Haddad. All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -31,7 +31,7 @@ import com.github.mangstadt.vinnie.SyntaxStyle;
  */
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -91,7 +91,7 @@ public enum VCardVersion {
 	 * @param version the text representation
 	 * @param xmlNamespace the xCard namespace or null if not defined
 	 */
-	private VCardVersion(String version, SyntaxStyle syntaxStyle, String xmlNamespace) {
+	VCardVersion(String version, SyntaxStyle syntaxStyle, String xmlNamespace) {
 		this.version = version;
 		this.syntaxStyle = syntaxStyle;
 		this.xmlNamespace = xmlNamespace;

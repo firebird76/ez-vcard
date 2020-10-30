@@ -8,7 +8,7 @@ import ezvcard.property.ImageProperty;
 import ezvcard.util.DataUri;
 
 /*
- Copyright (c) 2012-2018, Michael Angstadt
+ Copyright (c) 2012-2020, Michael Angstadt
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,7 @@ public abstract class ImagePropertyScribe<T extends ImageProperty> extends Binar
 		}
 
 		String src = element.absUrl("src");
-		if (src.length() == 0) {
+		if (src.isEmpty()) {
 			throw new CannotParseException(13);
 		}
 
